@@ -34,6 +34,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     //product
     Route::get('/admin/products', 'App\Http\Controllers\admin\ProductController@index')->name('admin-products');
+    Route::post('/admin/add/product', 'App\Http\Controllers\admin\ProductController@add')->name('admin-add-products');
+    Route::post('/admin/edit/product', 'App\Http\Controllers\admin\ProductController@edit')->name('admin-edit-products');
+    Route::post('/admin/delete/product', 'App\Http\Controllers\admin\ProductController@delete')->name('admin-delete-products');
 });
 
 require __DIR__.'/auth.php';
