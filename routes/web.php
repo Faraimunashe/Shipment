@@ -24,6 +24,9 @@ Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->midd
 Route::group(['middleware' => ['auth', 'role:user']], function () {
     Route::get('/user/shopping', 'App\Http\Controllers\user\ShoppingController@index')->name('user-shopping');
 
+    /* shopping & category */
+    Route::get('/user/details/{id}', 'App\Http\Controllers\user\ShoppingController@details')->name('user-product-details');
+
     /* cart routes */
     Route::get('/user/cart', 'App\Http\Controllers\user\ShoppingController@cart')->name('user-cart');
     Route::get('/add/cart/{id}', 'App\Http\Controllers\user\ShoppingController@add_cart')->name('add-cart');

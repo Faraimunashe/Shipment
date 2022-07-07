@@ -13,10 +13,25 @@ class ShoppingController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(8);
+        $products = Product::join('product_images', 'product_images.product_id', '=', 'products.id')
+        ->select('products.id', 'products.name', 'products.slug', 'products.price', 'product_images.img', 'products.created_at')
+        ->latest()
+        ->paginate(8);
 
         return view('user.shopping', [
             'products'=>$products
+        ]);
+    }
+
+    public function details($id)
+    {
+        $product = Product::join('product_images', 'product_images.product_id', '=', 'products.id')
+        ->where('products.id', $id)
+        ->select('products.id', 'products.name', 'products.slug', 'products.price', 'products.description', 'product_images.img', 'products.created_at')
+        ->first();
+
+        return view('user.product-details', [
+            'product'=>$product
         ]);
     }
 
@@ -37,18 +52,26 @@ class ShoppingController extends Controller
             return redirect()->back()->with('error', 'failed to add product in the table');
         }
 
-        try{
-            $cart = new Cart();
-            $cart->user_id = Auth::user()->id;
-            $cart->product_id = $id;
-            $cart->save();
-
-        }catch(QueryException $e)
+        $repeat = Cart::where('product_id', $id)->where('user_id', Auth::id())->first();
+        if(!is_null($repeat))
         {
-            return redirect()->back()->with('error', $e);
-        }
+            $repeat->qty = $repeat->qty + 1;
+            $repeat->save();
+            return redirect()->back()->with('success', 'Product updated in cart succesfully');
+        }else{
+            try{
+                $cart = new Cart();
+                $cart->user_id = Auth::user()->id;
+                $cart->product_id = $id;
+                $cart->save();
 
-        return redirect()->back()->with('success', 'Product added to cart succesfully');
+            }catch(QueryException $e)
+            {
+                return redirect()->back()->with('error', $e);
+            }
+
+            return redirect()->back()->with('success', 'Product added to cart succesfully');
+        }
     }
 
     public function increase_cart($cart_id)
@@ -79,16 +102,23 @@ class ShoppingController extends Controller
             return redirect()->back()->with('error', 'cannot find cart item');
         }
 
-        try{
-            $cart->qty = $cart->qty-1;
-            $cart->save();
-
-        }catch(QueryException $e)
+        if($cart->qty == 1)
         {
-            return redirect()->back()->with('error', $e);
+            $cart->delete();
+            return redirect()->back()->with('success', 'product removed from cart successfully');
+        }else{
+            try{
+                $cart->qty = $cart->qty-1;
+                $cart->save();
+
+            }catch(QueryException $e)
+            {
+                return redirect()->back()->with('error', $e);
+            }
+
+            return redirect()->back()->with('success', 'Quantity decreased successfully');
         }
 
-        return redirect()->back()->with('success', 'Quantity decreased successfully');
     }
 
     public function delete_cart($cart_id)

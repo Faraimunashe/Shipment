@@ -29,28 +29,23 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="" class="nav-item nav-link active">Home</a>
-                            <a href="" class="nav-item nav-link">Shop</a>
-                            <a href="" class="nav-item nav-link">Shop Detail</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="" class="dropdown-item">Shopping Cart</a>
-                                    <a href="" class="dropdown-item">Checkout</a>
-                                </div>
-                            </div>
-                            <a href="" class="nav-item nav-link">Contact</a>
+                            <a href="/" class="nav-item nav-link active">Home</a>
+                            <a href="{{ route('user-shopping') }}" class="nav-item nav-link">Shop</a>
+                            <a href="{{ route('user-cart') }}" class="nav-item nav-link">Cart</a>
+                            <a href="" class="nav-item nav-link">Shipping</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
-                            <a href="{{ route('register') }}" class="nav-item nav-link">Register</a>
+                            @if (!Auth::user())
+                                <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
+                                <a href="{{ route('register') }}" class="nav-item nav-link">Register</a>
+                            @endif
                         </div>
                     </div>
                 </nav>
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active" style="height: 410px;">
-                            <img class="img-fluid" src="img/carousel-1.jpg" alt="Image">
+                            <img class="img-fluid" src="{{ asset('img/carousel-1.jpg') }}" alt="Image">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
@@ -60,7 +55,7 @@
                             </div>
                         </div>
                         <div class="carousel-item" style="height: 410px;">
-                            <img class="img-fluid" src="img/carousel-2.jpg" alt="Image">
+                            <img class="img-fluid" src="{{ asset('img/carousel-2.jpg') }}" alt="Image">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
@@ -104,7 +99,7 @@
                              </div>
                          </div>
                          <div class="card-footer d-flex justify-content-between bg-light border">
-                             <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                             <a href="{{ route('user-product-details', $product->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
                              <a href="{{ route('add-cart', $product->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
                          </div>
                      </div>
