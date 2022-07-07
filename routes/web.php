@@ -13,14 +13,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', 'App\Http\Controllers\WelcomeController@index')->name('welcome');
 
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware' => ['auth', 'role:user']], function () {
     Route::get('/user/shopping', 'App\Http\Controllers\user\ShoppingController@index')->name('user-shopping');
+
+    /* cart routes */
+    Route::get('/user/cart', 'App\Http\Controllers\user\ShoppingController@cart')->name('user-cart');
+    Route::get('/add/cart/{id}', 'App\Http\Controllers\user\ShoppingController@add_cart')->name('add-cart');
+    Route::get('/cart/increase/quantity/{cart_id}', 'App\Http\Controllers\user\ShoppingController@increase_cart')->name('increase-cart');
+    Route::get('/cart/decrease/quantity/{cart_id}', 'App\Http\Controllers\user\ShoppingController@decrease_cart')->name('decrease-cart');
+    Route::get('/delete/cart/{cart_id}', 'App\Http\Controllers\user\ShoppingController@delete_cart')->name('delete-cart');
+
+    /*checkout routes*/
+    Route::get('/user/checkout', 'App\Http\Controllers\user\OrderController@index')->name('user-checkout');
+    Route::post('/user/checkout/post', 'App\Http\Controllers\user\OrderController@checkout')->name('user-checkout-post');
 });
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {

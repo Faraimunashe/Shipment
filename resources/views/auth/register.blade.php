@@ -91,7 +91,7 @@
 
                             <div class="col-12">
                                 <label for="yourPassword" class="form-label">Password Confirm</label>
-                                <input type="password" name="password_confirm" class="form-control" id="yourPassword" required>
+                                <input type="password" name="password_confirmation" class="form-control" id="yourPassword" required>
                                 <div class="invalid-feedback">Please enter your password!</div>
                             </div>
                             <div class="col-12">
