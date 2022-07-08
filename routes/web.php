@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth', 'role:user']], function () {
 
     /* shopping & category */
     Route::get('/user/details/{id}', 'App\Http\Controllers\user\ShoppingController@details')->name('user-product-details');
+    Route::get('/user/category/{id}', 'App\Http\Controllers\user\ShoppingController@category')->name('user-product-category');
 
     /* cart routes */
     Route::get('/user/cart', 'App\Http\Controllers\user\ShoppingController@cart')->name('user-cart');
@@ -53,6 +54,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/add/product', 'App\Http\Controllers\admin\ProductController@add')->name('admin-add-products');
     Route::post('/admin/edit/product', 'App\Http\Controllers\admin\ProductController@edit')->name('admin-edit-products');
     Route::post('/admin/delete/product', 'App\Http\Controllers\admin\ProductController@delete')->name('admin-delete-products');
+
+    //orders
+    Route::get('/admin/orders', 'App\Http\Controllers\admin\OrderController@index')->name('admin-orders');
 });
 
 require __DIR__.'/auth.php';

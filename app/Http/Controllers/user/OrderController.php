@@ -63,7 +63,7 @@ class OrderController extends Controller
         $address->zip = $request->zip;
         $address->save();
 
-        foreach(Cart::where('user_id', Auth::id()) as $item)
+        foreach(Cart::where('user_id', Auth::id())->get() as $item)
         {
             $product = Product::find($item->product_id);
             $oitem = new OrderItem();
@@ -75,8 +75,10 @@ class OrderController extends Controller
             $oitem->total = $item->qty * $product->price;
             $oitem->save();
 
-            $item->delete();
+            //$item->delete();
         }
+
+        Cart::where('user_id', Auth::id())->delete();
 
         return view('user.successful');
     }

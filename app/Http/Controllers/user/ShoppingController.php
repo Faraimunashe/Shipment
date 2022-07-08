@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Category;
 
 class ShoppingController extends Controller
 {
@@ -32,6 +33,20 @@ class ShoppingController extends Controller
 
         return view('user.product-details', [
             'product'=>$product
+        ]);
+    }
+
+    public function category($id)
+    {
+        $categor = Category::find($id);
+        $products = Product::join('product_images', 'product_images.product_id', '=', 'products.id')
+        ->where('products.category_id', $id)
+        ->select('products.id', 'products.name', 'products.slug', 'products.price', 'products.description', 'product_images.img', 'products.created_at')
+        ->get();
+
+        return view('user.category', [
+            'products'=>$products,
+            'categor'=>$categor
         ]);
     }
 

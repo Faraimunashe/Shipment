@@ -14,7 +14,7 @@
                             $categories = \App\Models\Category::all();
                         @endphp
                         @foreach ($categories as $category)
-                            <a href="" class="nav-item nav-link">{{ $category->name }}</a>
+                            <a href="{{ route('user-product-category',$category->id) }}" class="nav-item nav-link">{{ $category->name }}</a>
                         @endforeach
                     </div>
                 </nav>
