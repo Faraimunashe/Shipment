@@ -35,6 +35,12 @@ class OrderController extends Controller
             'current_position'=>'string'
         ]);
 
+        $already = Shipment::where('order_id', $request->order_id)->first();
+        if(is_null($already))
+        {
+            return redirect()->back()->with('error', 'Order already in shipment');
+        }
+
         $shipment = new Shipment();
         $shipment->transporter_id = $request->transporter_id;
         $shipment->order_id = $request->order_id;
