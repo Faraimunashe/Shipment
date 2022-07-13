@@ -32,7 +32,7 @@
                             <a href="/" class="nav-item nav-link active">Home</a>
                             <a href="{{ route('user-shopping') }}" class="nav-item nav-link">Shop</a>
                             <a href="{{ route('user-cart') }}" class="nav-item nav-link">Cart</a>
-                            <a href="" class="nav-item nav-link">Shipping</a>
+                            <a href="{{ route('user-orders')}}" class="nav-item nav-link">Orders</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>

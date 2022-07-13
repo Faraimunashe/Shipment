@@ -73,12 +73,87 @@
                                                 echo $itemcount;
                                             @endphp
                                         </td>
-                                        <td>{{ $order->status }}</td>
+                                        <td>
+                                            @if ($order->status == 'pending')
+                                                <span class="badge bg-secondary">{{$order->status}}</span>
+                                            @elseif($order->status == 'shipping')
+                                                <span class="badge bg-primary">{{$order->status}}</span>
+                                            @else
+                                                <span class="badge bg-success">{{$order->status}}</span>
+                                            @endif
+                                        </td>
                                         <td>{{ $order->created_at }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editCategory{{ $order->id }}"><i class="bi bi-pencil-square"></i></button>
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addShipment{{ $order->id }}"><i class="bi bi-truck"></i></button>
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCategory{{ $order->id }}"><i class="bi bi-trash"></i></button>
                                         </td>
+                                        <!-- Add Shipment Modal -->
+                                        <div class="modal fade" id="addShipment{{ $order->id }}" tabindex="-1">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <form action="{{ route('admin-add-shipments') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="order_id" value="{{ $order->id }}" required>
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Add Shipment</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row mb-3">
+                                                                <label for="inputText" class="col-sm-2 col-form-label">Transporter:</label>
+                                                                <div class="col-sm-10">
+                                                                    <select name="transporter_id" class="form-control" value="" required>
+                                                                        <option selected disabled></option>
+                                                                        @foreach ($transporters as $transporter)
+                                                                            <option value="{{$transporter->id}}">{{$transporter->name}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="inputText" class="col-sm-2 col-form-label">Next Stop:</label>
+                                                                <div class="col-sm-10">
+                                                                    <select name="next_point_id" class="form-control" value="" required>
+                                                                        <option selected disabled></option>
+                                                                        @foreach ($points as $point)
+                                                                            <option value="{{$point->id}}">{{$point->name}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="inputText" class="col-sm-2 col-form-label">Origin:</label>
+                                                                <div class="col-sm-10">
+                                                                    <select name="origin" class="form-control" value="" required>
+                                                                        <option selected disabled></option>
+                                                                        @foreach ($points as $point)
+                                                                            <option value="{{$point->id}}">{{$point->name}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="inputText" class="col-sm-2 col-form-label">Destination:</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" name="destination" class="form-control" placeholder="-18.987654, 26.098765" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="inputText" class="col-sm-2 col-form-label">Current Position:</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" name="current_position" class="form-control" placeholder="-18.987654, 26.098765" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!-- End Edit Category Modal-->
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -13,11 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/map', function () {
+    return view('map');
+});
 
 Route::get('/', 'App\Http\Controllers\WelcomeController@index')->name('welcome');
+Route::get('/maps', 'App\Http\Controllers\MapsController@index')->name('maps');
 
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->middleware(['auth'])->name('dashboard');
 
@@ -38,6 +39,13 @@ Route::group(['middleware' => ['auth', 'role:user']], function () {
     /*checkout routes*/
     Route::get('/user/checkout', 'App\Http\Controllers\user\OrderController@index')->name('user-checkout');
     Route::post('/user/checkout/post', 'App\Http\Controllers\user\OrderController@checkout')->name('user-checkout-post');
+
+    /*orders routes*/
+    Route::get('/user/orders', 'App\Http\Controllers\user\OrderController@myorders')->name('user-orders');
+
+    /*shipment track routes*/
+    Route::get('/user/tracking/{id}', 'App\Http\Controllers\user\TrackController@index')->name('user-track');
+
 });
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
@@ -57,6 +65,24 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     //orders
     Route::get('/admin/orders', 'App\Http\Controllers\admin\OrderController@index')->name('admin-orders');
+    Route::post('/admin/add/shipment', 'App\Http\Controllers\admin\OrderController@ship')->name('admin-add-shipments');
+
+    //Category
+    Route::get('/admin/checkpoints', 'App\Http\Controllers\admin\CheckPointController@index')->name('admin-checkpoints');
+    Route::post('/admin/add/CheckPoint', 'App\Http\Controllers\admin\CheckPointController@add')->name('admin-add-checkpoints');
+    Route::post('/admin/edit/CheckPoint', 'App\Http\Controllers\admin\CheckPointController@edit')->name('admin-edit-checkpoints');
+    Route::post('/admin/delete/CheckPoint', 'App\Http\Controllers\admin\CheckPointController@delete')->name('admin-delete-checkpoints');
+
+    //transporter
+    Route::get('/admin/transporters', 'App\Http\Controllers\admin\TransporterController@index')->name('admin-transporters');
+    Route::post('/admin/add/transporter', 'App\Http\Controllers\admin\TransporterController@add')->name('admin-add-transporters');
+    Route::post('/admin/edit/transporter', 'App\Http\Controllers\admin\TransporterController@edit')->name('admin-edit-transporters');
+    Route::post('/admin/delete/transporter', 'App\Http\Controllers\admin\TransporterController@delete')->name('admin-delete-transporters');
+
+    //user
+    Route::get('/admin/users', 'App\Http\Controllers\admin\UserController@index')->name('admin-users');
+    Route::post('/admin/edit/user', 'App\Http\Controllers\admin\UserController@edit')->name('admin-edit-users');
+
 });
 
 require __DIR__.'/auth.php';

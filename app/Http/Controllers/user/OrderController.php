@@ -82,4 +82,13 @@ class OrderController extends Controller
 
         return view('user.successful');
     }
+
+    public function myorders()
+    {
+        $orders = Order::where('user_id', Auth::user()->id)->get();
+
+        return view('user.orders', [
+            'orders'=>$orders
+        ]);
+    }
 }

@@ -38,16 +38,17 @@ class ProductController extends Controller
             $product = new Product();
             $product_image = new ProductImage();
 
-            $product_image->img = $imageName;
-
             $product->name = $request->name;
             $product->category_id = $request->category_id;
             $product->slug = $request->slug;
             $product->price = $request->price;
             $product->description = $request->description;
-
-            $product_image->save();
             $product->save();
+
+            $product_image->img = $imageName;
+            $product_image->product_id = $product->id;
+            $product_image->save();
+
         }catch(QueryException $e)
         {
             return redirect()->back()->with('error', $e);
