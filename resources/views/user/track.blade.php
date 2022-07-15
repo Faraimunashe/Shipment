@@ -115,14 +115,45 @@
                                 allowfullscreen>
                             </iframe>
                         @else
-                            <iframe
-                                width="750"
-                                height="350"
-                                frameborder="2" style="border:2"
-                                referrerpolicy="no-referrer-when-downgrade"
-                                src="https://www.google.com/maps/embed/v1/directions?key={{env('GOOGLE_MAP_KEY')}}&origin={{$cpOrigin->cordinates}}&destination={{$shipment->current_position}}&avoid=tolls|highways&waypoints=-19.4680551,29.8235776"
-                                allowfullscreen>
-                            </iframe>
+                            @php
+                                $ways = \App\Models\WayPoint::where('shipment_id', $shipment->id)->get();
+                                //dd($ways);
+                            @endphp
+                            @if ($ways->isEmpty())
+                                <iframe
+                                    width="750"
+                                    height="350"
+                                    frameborder="2" style="border:2"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    src="https://www.google.com/maps/embed/v1/directions?key={{env('GOOGLE_MAP_KEY')}}&origin={{$cpOrigin->cordinates}}&destination={{$shipment->current_position}}&avoid=tolls|highways"
+                                    allowfullscreen>
+                                </iframe>
+                            @else
+                                @php
+                                    $waypoints = "";
+                                    $counter = $ways->count();
+                                    $i = 0;
+                                    foreach($ways as $way)
+                                    {
+                                        $i++;
+                                        $waypoints = $waypoints.$way->cords;
+                                        if($i<$counter)
+                                        {
+                                            $waypoints = $waypoints."|";
+                                        }
+                                    }
+                                    //echo $waypoints;
+                                @endphp
+                                <iframe
+                                    width="750"
+                                    height="350"
+                                    frameborder="2" style="border:2"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    src="https://www.google.com/maps/embed/v1/directions?key={{env('GOOGLE_MAP_KEY')}}&origin={{$cpOrigin->cordinates}}&destination={{$shipment->current_position}}&avoid=tolls|highways&waypoints={{$waypoints}}"
+                                    allowfullscreen>
+                                </iframe>
+                            @endif
+
                         @endif
                     </div>
                     <div class="col-lg-12 table-responsive mb-5">

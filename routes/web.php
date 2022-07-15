@@ -85,4 +85,12 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 });
 
+Route::group(['middleware'=>['auth', 'role:transporter']], function (){
+    Route::get('/transporter/dashboard', 'App\Http\Controllers\transporter\DashboardController@index')->name('transporter-dashboard');
+
+    //old shipments
+    Route::get('/transporter/shipments', 'App\Http\Controllers\transporter\ShipmentController@index')->name('transporter-shipments');
+
+});
+
 require __DIR__.'/auth.php';

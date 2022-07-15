@@ -36,9 +36,17 @@ class OrderController extends Controller
         ]);
 
         $already = Shipment::where('order_id', $request->order_id)->first();
-        if(is_null($already))
+        if(!is_null($already))
         {
             return redirect()->back()->with('error', 'Order already in shipment');
+        }
+
+        $alreadytrans = Shipment::where('transporter_id', $request->transporter_id)->first();
+        if(!is_null($alreadytrans)){
+            if($alreadytrans->status !== 4)
+            {
+                return redirect()->back()->with('error', 'Courier already on another duty');
+            }
         }
 
         $shipment = new Shipment();

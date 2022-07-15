@@ -275,7 +275,7 @@
       &copy; Copyright <strong><span>Prof-Virus</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
-        Designed by <a href="https://faraimunashe.me">Faraimunashe</a>
+        Designed by <a href="https://faraimunashe.me" target="_blank">Faraimunashe</a>
     </div>
   </footer><!-- End Footer -->
 
@@ -284,7 +284,6 @@
   <!-- Vendor JS Files -->
   <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
   <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{ asset('assets/vendor/chart.js')}}/chart.min.js')}}"></script>
   <script src="{{ asset('assets/vendor/echarts/echarts.min.js')}}"></script>
   <script src="{{ asset('assets/vendor/quill/quill.min.js')}}"></script>
   <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
@@ -293,6 +292,9 @@
 
   <!-- Template Main JS File -->
   <script src="{{ asset('assets/js/main.js')}}"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&libraries=places&callback=initialize" async defer></script>
+    <script src="{{asset('js/mapInput.js')}}"></script>
 
 </body>
 

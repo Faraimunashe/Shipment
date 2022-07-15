@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('shipment_id')->nullable();
             $table->string('point_id')->nullable();
+            $table->string('cords')->nullable();
             $table->timestamps();
         });
     }

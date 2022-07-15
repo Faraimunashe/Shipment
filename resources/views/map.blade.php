@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Maps</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-  </head>
-    <body>
-        <iframe
-            width="550"
-            height="450"
-            frameborder="2" style="border:0"
-            referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDsn-7y9P98peX7fZ3VoWVjK2fG1dh_sCs&origin=-19.5182841,29.8378243&destination=-19.4530735,29.813632&avoid=tolls|highways&waypoints=-19.4680551,29.8235776"
-            allowfullscreen>
-        </iframe>
-    </body>
-</html>
+<x-app-layout>
+    <div class="pagetitle">
+        <h1>Location</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Courrier</li>
+            <li class="breadcrumb-item active">Location</li>
+          </ol>
+        </nav>
+    </div>
+        <div class="form-group">
+            <label for="address_address">Address</label>
+            <input type="text" id="address-input" name="address_address" class="form-control map-input">
+            <input type="hidden" name="address_latitude" id="address-latitude" value="0" />
+            <input type="hidden" name="address_longitude" id="address-longitude" value="0" />
+        </div>
+        <div id="address-map-container" style="width:100%;height:400px; ">
+            <div style="width: 100%; height: 100%" id="address-map"></div>
+        </div>
+</x-app-layout>

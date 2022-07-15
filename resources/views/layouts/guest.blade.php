@@ -48,20 +48,35 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="{{ route('user-cart') }}" class="btn border">
-                    <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">
-                        @if (Auth::user())
-                            @php
-                                $cartcount = \App\Models\Cart::where('user_id', Auth::id())->count();
-                                echo $cartcount;
-                            @endphp
-                        @else
-                            0
-                        @endif
+                <div class="row text-right">
+                    <div class="col-lg-6">
+                        <a href="{{ route('user-cart') }}" class="btn border">
+                            <i class="fas fa-shopping-cart text-primary"></i>
+                            <span class="badge">
+                                @if (Auth::user())
+                                    @php
+                                        $cartcount = \App\Models\Cart::where('user_id', Auth::id())->count();
+                                        echo $cartcount;
+                                    @endphp
+                                @else
+                                    0
+                                @endif
 
-                    </span>
-                </a>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        @if (Auth::user())
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                            </form>
+                            <a href="" class="btn border" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <i class="fas fa-lock text-primary"></i>
+                                <span class="badge">Logout</span>
+                            </a>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>
