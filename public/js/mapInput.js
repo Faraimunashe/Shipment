@@ -16,8 +16,8 @@ function initialize() {
         const fieldKey = input.id.replace("-input", "");
         const isEdit = document.getElementById(fieldKey + "-latitude").value != '' && document.getElementById(fieldKey + "-longitude").value != '';
 
-        const latitude = parseFloat(document.getElementById(fieldKey + "-latitude").value) || -33.8688;
-        const longitude = parseFloat(document.getElementById(fieldKey + "-longitude").value) || 151.2195;
+        const latitude = parseFloat(document.getElementById(fieldKey + "-latitude").value) || -19.51847555;
+        const longitude = parseFloat(document.getElementById(fieldKey + "-longitude").value) || 29.83736827;
 
         const map = new google.maps.Map(document.getElementById(fieldKey + '-map'), {
             center: {lat: latitude, lng: longitude},
@@ -75,6 +75,11 @@ function initialize() {
 function setLocationCoordinates(key, lat, lng) {
     const latitudeField = document.getElementById(key + "-" + "latitude");
     const longitudeField = document.getElementById(key + "-" + "longitude");
+    const mylatField = document.getElementById('lat');
+    const mylonField = document.getElementById('lon');
+
     latitudeField.value = lat;
     longitudeField.value = lng;
+    mylatField.value = lat;
+    mylonField.value = lng;
 }

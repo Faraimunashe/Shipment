@@ -87,6 +87,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 Route::group(['middleware'=>['auth', 'role:transporter']], function (){
     Route::get('/transporter/dashboard', 'App\Http\Controllers\transporter\DashboardController@index')->name('transporter-dashboard');
+    Route::get('/transporter/location/{id}', 'App\Http\Controllers\transporter\DashboardController@location')->name('transporter-location');
+    Route::post('/transporter/update/location', 'App\Http\Controllers\transporter\DashboardController@update')->name('transporter-update-location');
 
     //old shipments
     Route::get('/transporter/shipments', 'App\Http\Controllers\transporter\ShipmentController@index')->name('transporter-shipments');

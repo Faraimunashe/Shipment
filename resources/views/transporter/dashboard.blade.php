@@ -151,20 +151,8 @@
                     <div class="tab-pane fade pt-3" id="profile-settings">
                         <h5 class="card-title">Set Current Location</h5>
                         <!-- Change Password Form -->
-                        <form>
-                            <div class="row mb-3">
-                                <input type="hidden" name="latitude" id="address-latitude" value="0" />
-                                <input type="hidden" name="longitude" id="address-longitude" value="0" />
-                                <label for="address-input" class="col-md-4 col-lg-3 col-form-label">Current Location</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <input name="location" type="text" class="form-control" id="address-input" required>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Update Location</button>
-                            </div>
-                        </form>
-                        <!-- End Change Password Form -->
+                        <a href="{{route('transporter-location', $shipment->id)}}" class="btn btn-primary">Click Here</a>
+
                     </div>
                 </div><!-- End Bordered Tabs -->
 

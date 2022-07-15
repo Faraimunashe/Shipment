@@ -295,7 +295,6 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&libraries=places&callback=initialize" async defer></script>
     <script src="{{asset('js/mapInput.js')}}"></script>
-
 </body>
 
 </html>
