@@ -22,23 +22,25 @@ class CheckPointController extends Controller
         ]);
     }
 
+    public function add_checkpoint()
+    {
+        return view('admin.add-check-point');
+    }
+
     public function add(Request $request)
     {
         $request->validate([
-            'name'=>'required|string',
-            'address'=>'required|string',
-            'user_id'=>'required|numeric',
-            'latitude'=>'required|string',
-            'longitude'=>'required|string'
+            'address_address'=>'required|string',
+            'lat'=>'required|string',
+            'lon'=>'required|string'
         ]);
 
         try{
             $point = new CheckPoint();
 
-            $point->name = $request->name;
-            $point->user_id = $request->user_id;
-            $point->address = $request->address;
-            $point->cordinates = $request->latitude.",".$request->longitude;
+            $point->name = $request->address_address;
+            $point->address = $request->address_address;
+            $point->cordinates = $request->lat.",".$request->lon;
 
             $point->save();
         }catch(QueryException $e)
@@ -46,7 +48,7 @@ class CheckPointController extends Controller
             return redirect()->back()->with('error', $e);
         }
 
-        return redirect()->back()->with('success', 'Successfully added a new check point!');
+        return redirect()->route('admin-checkpoints')->with('success', 'Successfully added a new check point!');
     }
 
     public function edit(Request $request)
@@ -55,7 +57,6 @@ class CheckPointController extends Controller
             'point_id'=>'required|numeric',
             'name'=>'required|string',
             'address'=>'required|string',
-            'user_id'=>'required|numeric',
             'latitude'=>'required|string',
             'longitude'=>'required|string'
         ]);
@@ -68,7 +69,6 @@ class CheckPointController extends Controller
 
         try{
             $point->name = $request->name;
-            $point->user_id = $request->user_id;
             $point->address = $request->address;
             $point->cordinates = $request->latitude.",".$request->longitude;
             $point->save();

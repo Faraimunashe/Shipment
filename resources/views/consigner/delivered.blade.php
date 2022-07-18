@@ -4,10 +4,10 @@
           <nav>
               <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                  <li class="breadcrumb-item active">Shipments</li>
+                  <li class="breadcrumb-item active">Delivered</li>
               </ol>
           </nav>
-      </div>
+    </div>
       <!-- End Page Title -->
     <section class="section">
         <div class="row">
@@ -32,18 +32,16 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Shipments</h5>
+                        <h5 class="card-title">Delivered Shipments</h5>
                         <!-- Table with stripped rows -->
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">reference</th>
-                                    <th scope="col">Order #</th>
-                                    <th scope="col">Origin</th>
+                                    <th scope="col">ref</th>
+                                    <th scope="col">Current Position</th>
                                     <th scope="col">Destination</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,37 +57,15 @@
                                             @endphp
                                         </th>
                                         <td>{{ $item->reference }}</td>
+                                        <td>{{$item->current_position}}</td>
+                                        <td>{{$item->destination_name}}</td>
                                         <td>
-                                            @php
-                                                $order = \App\Models\Order::find($item->order_id);
-                                                echo $order->code;
-                                            @endphp
-                                        </td>
-                                        <td>
-                                            @php
-                                                $origin = \App\Models\CheckPoint::find($item->origin);
-                                                echo $origin->name;
-                                            @endphp
-                                        </td>
-                                        <td>{{$item->destination}}</td>
-                                        <td>
-                                            @if ($item->status == 0)
-                                                Loading
-                                            @elseif ($item->status == 1)
-                                                Transit
-                                            @elseif ($item->status == 2)
-                                                Check Point
-                                            @elseif ($item->status == 3)
-                                                Missing
-                                            @elseif ($item->status == 4)
+                                            @if ($item->status == 4)
                                                 Delivered
-                                            @elseif ($item->status == 5)
-                                                Breakdown
                                             @else
-                                                Unknown
+                                                {{ $item->status }}
                                             @endif
                                         </td>
-                                        <td>{{ $item->created_at }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -101,3 +77,4 @@
         </div>
     </section>
 </x-app-layout>
+

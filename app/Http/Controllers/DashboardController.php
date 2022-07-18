@@ -15,9 +15,12 @@ class DashboardController extends Controller
         }elseif(Auth::user()->hasRole('admin'))
         {
             return redirect()->route('admin-dashboard');
-        }elseif(Auth::user()->hasRole('transporter'))
+        }elseif(Auth::user()->hasRole('courier'))
         {
-            return redirect()->route('transporter-dashboard');
+            return redirect()->route('courier-dashboard');
+        }elseif(Auth::user()->hasRole('consigner'))
+        {
+            return redirect()->route('consigner-dashboard');
         }
     }
 }

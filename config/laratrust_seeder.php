@@ -17,11 +17,11 @@ return [
             'payments' => 'c,r,u,d',
             'profile' => 'r,u'
         ],
-        'checkpoint' => [
+        'consigner' => [
             'users' => 'c,r,u,d',
             'profile' => 'r,u'
         ],
-        'transporter' => [
+        'courier' => [
             'profile' => 'r,u',
         ],
         'user' => [

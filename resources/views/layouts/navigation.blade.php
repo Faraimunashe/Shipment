@@ -31,7 +31,7 @@
             </li><!-- End Contact Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-register.html">
+                <a class="nav-link collapsed" href="#">
                 <i class="bi bi-tsunami"></i>
                 <span>Shipments</span>
                 </a>
@@ -45,9 +45,16 @@
             </li><!-- End Login Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('admin-transporters')}}">
+                <a class="nav-link collapsed" href="#">
                 <i class="bi bi-truck"></i>
-                <span>Transporter</span>
+                <span>Consigners</span>
+                </a>
+            </li><!-- End Error 404 Page Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#">
+                <i class="bi bi-truck"></i>
+                <span>Courier</span>
                 </a>
             </li><!-- End Error 404 Page Nav -->
 
@@ -58,7 +65,7 @@
                 </a>
             </li><!-- End Error 404 Page Nav -->
 
-        @elseif (Auth::user()->hasRole('transporter'))
+        @elseif (Auth::user()->hasRole('courier'))
             <li class="nav-item">
                 <a class="nav-link " href="{{ route('dashboard') }}">
                 <i class="bi bi-grid"></i>
@@ -67,15 +74,49 @@
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('transporter-shipments') }}">
+                <a class="nav-link collapsed" href="{{ route('courier-shipments') }}">
                     <i class="bi bi-truck"></i>
                     <span>Shipments</span>
                 </a>
-            </li><!-- End Profile Page Nav -->
-        @elseif (Auth::user()->hasRole('checkpoint'))
-
+            </li>
+        @elseif (Auth::user()->hasRole('consigner'))
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('consigner-dashboard') }}">
+                    <i class="bi bi-house"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('consigner-transit') }}">
+                    <i class="bi bi-truck"></i>
+                    <span>Transit</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('consigner-warehouse') }}">
+                    <i class="bi bi-flag"></i>
+                    <span>Warehouse</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('consigner-delivered') }}">
+                    <i class="bi bi-pin-map-fill"></i>
+                    <span>Delivered</span>
+                </a>
+            </li>
         @else
-
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('user-shopping') }}">
+                    <i class="bi bi-house"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('user-orders') }}">
+                    <i class="bi bi-list-check"></i>
+                    <span>Orders</span>
+                </a>
+            </li>
         @endif
 
         <li class="nav-item">

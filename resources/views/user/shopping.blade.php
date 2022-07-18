@@ -1,78 +1,64 @@
 <x-guest-layout>
-
-    <!-- Navbar Start -->
-    <div class="container-fluid mb-5">
-        <div class="row border-top px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
-                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                    <h6 class="m-0">Categories</h6>
-                    <i class="fa fa-angle-down text-dark"></i>
-                </a>
-                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                        @php
-                            $categories = \App\Models\Category::all();
-                        @endphp
-                        @foreach ($categories as $category)
-                            <a href="{{ route('user-product-category',$category->id) }}" class="nav-item nav-link">{{ $category->name }}</a>
-                        @endforeach
+    <div class="pagetitle">
+        <h1>Shopping</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">User</li>
+            <li class="breadcrumb-item active">Shopping</li>
+          </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <x-auth-validation-errors class="alert alert-danger" :errors="$errors" />
+                @if (Session::has('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-octagon me-1"></i>
+                        {{ Session::get('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                </nav>
+                @endif
+                @if (Session::has('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle me-1"></i>
+                        {{ Session::get('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
             </div>
-            <div class="col-lg-9">
-                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-                    <a href="{{ route('dashboard') }}" class="text-decoration-none d-block d-lg-none">
-                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
-                    </a>
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <div class="navbar-nav mr-auto py-0">
-                            <a href="{{ route('dashboard') }}" class="nav-item nav-link active">Home</a>
-                            <a href="{{ route('user-shopping') }}" class="nav-item nav-link">Shop</a>
-                            <a href="{{ route('user-cart') }}" class="nav-item nav-link">Cart</a>
-                            <a href="{{ route('user-orders')}}" class="nav-item nav-link">Orders</a>
-                        </div>
-                        <div class="navbar-nav ml-auto py-0">
-                            @if (!Auth::user())
-                                <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
-                                <a href="{{ route('register') }}" class="nav-item nav-link">Register</a>
-                            @endif
-                        </div>
-                    </div>
-                </nav>
-                <!-- Products Start -->
-                <div class="container-fluid pt-5">
-                    <div class="text-center mb-4">
-                        <h2 class="section-title px-5"><span class="px-2">Newest Products</span></h2>
-                    </div>
-                    <div class="row px-xl-5 pb-3">
-                        @foreach ($products as $product)
-                            <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                                <div class="card product-item border-0 mb-4">
-                                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                        <img class="img-fluid w-100" src="{{ asset('images') }}/{{ $product->img }}" alt="">
-                                    </div>
-                                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                        <h6 class="text-truncate mb-3">{{ $product->name }}</h6>
-                                        <div class="d-flex justify-content-center">
-                                            <h6>${{ $product->price }}</h6>{{-- <h6 class="text-muted ml-2"><del>$123.00</del> </h6>--}}
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex justify-content-between bg-light border">
-                                        <a href="{{ route('user-product-details', $product->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                        <a href="{{ route('add-cart', $product->id) }}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                                    </div>
+            @foreach ($products as $product)
+                <div class="col-md-8 col-lg-4 col-xl-4">
+                    <div class="card text-black">
+                        <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
+                        <img src="{{ asset('images') }}/{{ $product->img }}" height="250"
+                        class="card-img-top" alt="Apple Computer" />
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <p class="text-muted mb-4">
+                                    @php
+                                        $category = \App\Models\Category::find($product->category_id);
+                                        echo $category->name;
+                                    @endphp
+                                </p>
+                            </div>
+                            <div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Price: </span><span>${{ $product->price }}</span>
                                 </div>
                             </div>
-                        @endforeach
+                            <div class="d-grid gap-2 mt-3">
+                                <a class="btn btn-primary" href="{{ route('add-cart', $product->id) }}">
+                                    <i class="bi bi-cart"></i>
+                                    Add Cart
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- Products End -->
-            </div>
+            @endforeach
         </div>
-    </div>
-    <!-- Navbar End -->
-
+    </section>
  </x-guest-layout>

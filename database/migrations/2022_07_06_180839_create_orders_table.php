@@ -15,11 +15,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('user_id');
+            $table->bigInteger('consigner_id');
             $table->string('code')->unique();
             $table->decimal('sub_total');
-            $table->decimal('shipping_fee');
+            $table->decimal('consigner_fee');
             $table->decimal('total');
+            $table->string('destination')->nullable();
+            $table->string('destination_name')->nullable();
             $table->string('status')->default('pending'); //in transit, delivered, at checkpoint, lost
             $table->timestamps();
         });

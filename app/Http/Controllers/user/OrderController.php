@@ -10,15 +10,19 @@ use App\Models\BillingAddress;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Consigner;
+use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
     public function index()
     {
         $cart = Cart::where('user_id', Auth::id())->get();
+        $consigners = Consigner::all();
 
         return view('user.checkout', [
-            'cart'=>$cart
+            'cart'=>$cart,
+            'consigners'=>$consigners
         ]);
     }
 
@@ -36,16 +40,20 @@ class OrderController extends Controller
             'state'=>'required|string',
             'zip'=>'required|numeric',
             'gtotal'=>'required',
-            'sfee'=>'required',
+            'consigner_id'=>'required',
             'total'=>'required',
         ]);
 
+        $consigner = Consigner::find($request->consigner_id);
+
         $order = new Order();
         $order->user_id = Auth::user()->id;
+        $order->consigner_id = $consigner->id;
         $order->code = rand(11111111, 99999999);
         $order->sub_total = $request->gtotal;
-        $order->shipping_fee = $request->sfee;
-        $order->total = $request->total;
+        $order->consigner_fee = $consigner->pricing;
+        $order->total = $request->gtotal + $consigner->pricing;
+        $order->status = "missing address";
         $order->save();
 
         $address = new BillingAddress();
@@ -78,9 +86,11 @@ class OrderController extends Controller
             //$item->delete();
         }
 
+        //Session::put('shipping_order_id', $order->id);
+
         Cart::where('user_id', Auth::id())->delete();
 
-        return view('user.successful');
+        return redirect()->route('user-shipping', $order->id)->with('success', 'Add shipping address');
     }
 
     public function myorders()

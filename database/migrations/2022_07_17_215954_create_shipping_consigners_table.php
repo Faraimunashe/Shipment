@@ -13,17 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('shipments', function (Blueprint $table) {
+        Schema::create('shipping_consigners', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('consigner_id');
-            $table->bigInteger('courier_id')->nullable();
             $table->bigInteger('order_id');
-            $table->bigInteger('next_point_id')->nullable();
-            $table->string('reference')->nullable();
-            $table->string('origin');
-            $table->string('destination');
-            $table->string('current_position');
-            $table->integer('status')->default(0);
+            $table->bigInteger('consigner_id');
+            $table->decimal('price');
             $table->timestamps();
         });
     }
@@ -35,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shipments');
+        Schema::dropIfExists('shipping_consigners');
     }
 };

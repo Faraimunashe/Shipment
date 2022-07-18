@@ -116,7 +116,7 @@
                                              <div class="modal fade" id="deleteproduct{{ $product->id }}" tabindex="-1">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
-                                                        <form action="{{ route('admin-delete-categories') }}" method="POST">
+                                                        <form action="{{ route('admin-delete-products') }}" method="POST">
                                                             @csrf
                                                             <input type="hidden" name="product_id" value="{{ $product->id }}" required>
                                                             <div class="modal-header">

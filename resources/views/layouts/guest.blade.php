@@ -2,120 +2,205 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+  <title>Shop - Shipment Sys</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Favicons -->
+  <link href="{{ asset('assets/img/favicon.png')}}" rel="icon">
+  <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/quill/quill.snow.css')}}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/quill/quill.bubble.css')}}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/simple-datatables/style.css')}}" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  <!-- Template Main CSS File -->
+  <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Topbar Start -->
-    <div class="container-fluid">
-        <div class="row align-items-center py-3 px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
-                <a href="" class="text-decoration-none">
-                    <h2 class="m-0 display-5 font-weight-semi-bold">Shipment Sys</h2>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="{{ route('dashboard') }}" class="logo d-flex align-items-center">
+        <img src="{{ asset('assets/img/logo.png') }}" alt="">
+        <span class="d-none d-lg-block">Shipment Sys</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+
+            <li class="nav-item d-block d-lg-none">
+                <a class="nav-link nav-icon search-bar-toggle " href="#">
+                    <i class="bi bi-search"></i>
                 </a>
-            </div>
-            <div class="col-lg-6 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-3 col-6 text-right">
-                <div class="row text-right">
-                    <div class="col-lg-6">
-                        <a href="{{ route('user-cart') }}" class="btn border">
-                            <i class="fas fa-shopping-cart text-primary"></i>
-                            <span class="badge">
-                                @if (Auth::user())
-                                    @php
-                                        $cartcount = \App\Models\Cart::where('user_id', Auth::id())->count();
-                                        echo $cartcount;
-                                    @endphp
-                                @else
-                                    0
-                                @endif
+            </li><!-- End Search Icon-->
 
-                            </span>
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        @if (Auth::user())
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                                @csrf
-                            </form>
-                            <a href="" class="btn border" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                <i class="fas fa-lock text-primary"></i>
-                                <span class="badge">Logout</span>
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                    <i class="bi bi-cart"></i>
+                    <span class="badge bg-danger badge-number">
+                        @php
+                            $cartcount = \App\Models\Cart::where('user_id', Auth::id())->count();
+                            echo $cartcount;
+                        @endphp
+                    </span>
+                </a><!-- End Messages Icon -->
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                    <li class="dropdown-header">
+                    Total items {{ $cartcount }}
+                    <a href="{{ route('user-checkout') }}"><span class="badge rounded-pill bg-primary p-2 ms-2">Checkout</span></a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    @php
+                        $cartitem = \App\Models\Cart::join('products', 'products.id', '=', 'carts.product_id')
+                            ->join('product_images', 'product_images.product_id', '=', 'carts.product_id')
+                            ->select('carts.id', 'carts.qty', 'products.category_id', 'products.name', 'products.price', 'product_images.img')
+                            ->where('user_id', Auth::id())
+                            ->get();
+                    @endphp
+
+                    @foreach ($cartitem as $cart)
+                        <li class="message-item">
+                            <a href="#">
+                                <img src="{{ asset('images') }}/{{ $cart->img }}" alt="" class="rounded-circle">
+                                <div>
+                                    <p>{{ $cart->name }}</p>
+                                    <p>${{ $cart->price }} x{{ $cart->qty }}</p>
+                                </div>
                             </a>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    @endforeach
+                    <li class="dropdown-footer">
+                        <a href="#">visit cart</a>
+                    </li>
 
+                </ul><!-- End Messages Dropdown Items -->
+            </li><!-- End Messages Nav -->
 
+            <li class="nav-item dropdown pe-3">
 
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <img src="{{ asset('assets/img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
+                    <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
+                </a><!-- End Profile Iamge Icon -->
+
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                <li class="dropdown-header">
+                    <h6>{{ Auth::user()->name }}</h6>
+                    <span>{{ Auth::user()->roles->first()->display_name }}</span>
+                </li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                    <i class="bi bi-person"></i>
+                    <span>My Profile</span>
+                </a>
+                </li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                    <i class="bi bi-gear"></i>
+                    <span>Account Settings</span>
+                </a>
+                </li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                    <i class="bi bi-question-circle"></i>
+                    <span>Need Help?</span>
+                </a>
+                </li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Sign Out</span>
+                </a>
+                </li>
+
+            </ul><!-- End Profile Dropdown Items -->
+            </li><!-- End Profile Nav -->
+
+        </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  @include('layouts.navigation')
+  <!-- End Sidebar-->
+
+  <main id="main" class="main">
     {{ $slot }}
+  </main><!-- End #main -->
 
-    <!-- Footer Start -->
-    <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-        <div class="row border-top border-light mx-xl-5 py-4">
-            <div class="col-md-6 px-xl-0">
-                <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Shipment Sys</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-dark font-weight-semi-bold" href="https://faraimunashe.me">Faraimunashe</a>
-                </p>
-            </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="{{ asset('img/payments.png') }}" alt="">
-            </div>
-        </div>
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Prof-Virus</span></strong>. All Rights Reserved
     </div>
-    <!-- Footer End -->
+    <div class="credits">
+        Designed by <a href="https://faraimunashe.me" target="_blank">Faraimunashe</a>
+    </div>
+  </footer><!-- End Footer -->
 
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+  <!-- Vendor JS Files -->
+  <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
+  <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{ asset('assets/vendor/echarts/echarts.min.js')}}"></script>
+  <script src="{{ asset('assets/vendor/quill/quill.min.js')}}"></script>
+  <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
+  <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js')}}"></script>
+  <script src="{{ asset('assets/vendor/php-email-form/validate.js')}}"></script>
 
-
-    <!-- JavaScript Libraries -->
-    <script src="{{ asset('https://code.jquery.com/jquery-3.4.1.min.js')}}"></script>
-    <script src="{{ asset('https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{ asset('lib/easing/easing.min.js')}}"></script>
-    <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js')}}"></script>
-
-    <!-- Template Javascript -->
-    <script src="{{ asset('js/main.js')}}"></script>
+  <!-- Template Main JS File -->
+  <script src="{{ asset('assets/js/main.js')}}"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&libraries=places&callback=initialize" async defer></script>
+    <script src="{{asset('js/mapInput.js')}}"></script>
 </body>
 
 </html>

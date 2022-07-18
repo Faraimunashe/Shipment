@@ -56,4 +56,26 @@ class ProductController extends Controller
 
         return redirect()->back()->with('success','You have successfully added new product.');
     }
+
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'product_id'=>'required|numeric'
+        ]);
+
+        $product = Product::find($request->product_id);
+        if(is_null($product))
+        {
+            return redirect()->back()->with('error', 'cannot find specified product');
+        }
+
+        try{
+            $product->delete();
+        }catch(QueryException $e)
+        {
+            return redirect()->back()->with('error', $e);
+        }
+
+        return redirect()->back()->with('success', 'Successfully deleted product!');
+    }
 }

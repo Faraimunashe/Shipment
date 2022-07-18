@@ -153,7 +153,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <!-- End Edit Category Modal-->
+                                        <!-- End Add Shipment Modal-->
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -15,9 +15,9 @@ class ShoppingController extends Controller
     public function index()
     {
         $products = Product::join('product_images', 'product_images.product_id', '=', 'products.id')
-        ->select('products.id', 'products.name', 'products.slug', 'products.price', 'product_images.img', 'products.created_at')
+        ->select('products.id', 'products.category_id', 'products.name', 'products.slug', 'products.price', 'product_images.img', 'products.created_at')
         ->latest()
-        ->paginate(8);
+        ->paginate(6);
 
         return view('user.shopping', [
             'products'=>$products

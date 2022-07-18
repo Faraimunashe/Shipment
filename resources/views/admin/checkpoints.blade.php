@@ -33,9 +33,9 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Courrier Checkpoints</h5>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategory">
+                        <a href="{{ route('add-checkpoints') }}" class="btn btn-primary">
                             Add New
-                        </button>
+                        </a>
                         <!-- Table with stripped rows -->
                         <table class="table table-striped">
                             <thead>
@@ -43,7 +43,6 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Address</th>
-                                    <th scope="col">Username</th>
                                     <th scope="col">Lat,Lon</th>
                                     <th scope="col">Created On</th>
                                     <th scope="col">Action</th>
@@ -63,17 +62,6 @@
                                         </th>
                                         <td>{{ $point->name }}</td>
                                         <td>{{ $point->address }}</td>
-                                        <td>
-                                            @php
-                                                $user = \App\Models\User::find($point->user_id);
-                                                if(is_null($user))
-                                                {
-                                                    echo "not assigned";
-                                                }else{
-                                                    echo $user->name;
-                                                }
-                                            @endphp
-                                        </td>
                                         <td>{{ $point->cordinates }}</td>
                                         <td>{{ $point->created_at }}</td>
                                         <td>
@@ -102,26 +90,6 @@
                                                                     <label for="inputText" class="col-sm-2 col-form-label">Address:</label>
                                                                     <div class="col-sm-10">
                                                                         <input type="text" name="address" class="form-control" value="{{ $point->address }}" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <label for="inputText" class="col-sm-2 col-form-label">User:</label>
-                                                                    <div class="col-sm-10">
-                                                                        <select name="user_id" class="form-control" value="" required>
-                                                                            <option selected disabled>
-                                                                                @php
-                                                                                    if(is_null($user))
-                                                                                    {
-                                                                                        echo "not assigned";
-                                                                                    }else{
-                                                                                        echo $user->name;
-                                                                                    }
-                                                                                @endphp
-                                                                            </option>
-                                                                            @foreach ($users as $item)
-                                                                                <option value="{{$item->id}}">{{$item->name}}</option>
-                                                                            @endforeach
-                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 @php
@@ -184,7 +152,7 @@
         </div>
     </section>
     <!-- Large Modal -->
-    <div class="modal fade" id="addCategory" tabindex="-1">
+    {{-- <div class="modal fade" id="addCategory" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <form action="{{ route('admin-add-checkpoints') }}" method="POST">
@@ -238,6 +206,6 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- End Large Modal-->
 </x-app-layout>
