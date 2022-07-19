@@ -114,6 +114,15 @@
             </div>
             <div class="col-lg-3">
                 <div class="card">
+                    <div class="card-header">Overview</div>
+                    <div class="card-body profile-card pt-4 d-flex flex-column">
+                        <div><b>Time: </b>14 Days</div>
+                        <hr class="mt-0">
+                        <div><b>Delay: </b>3 Days</div>
+                        <hr class="mt-0">
+                    </div>
+                </div>
+                <div class="card">
                     <div class="card-header">Tracking Details</div>
                     <div class="card-body profile-card pt-4 d-flex flex-column">
                         <div class="row">

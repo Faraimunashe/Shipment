@@ -59,7 +59,7 @@
                 </a>
             </li><!-- End Search Icon-->
 
-            <li class="nav-item dropdown">
+            {{-- <li class="nav-item dropdown">
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-bell"></i>
@@ -198,7 +198,7 @@
 
             </ul><!-- End Messages Dropdown Items -->
 
-            </li><!-- End Messages Nav -->
+            </li><!-- End Messages Nav --> --}}
 
             <li class="nav-item dropdown pe-3">
 
