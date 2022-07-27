@@ -71,7 +71,7 @@
                             <div class="col-12">
                                 <label for="yourEmail" class="form-label">Email Address</label>
                                 <div class="input-group has-validation">
-                                    <input type="email" name="email" class="form-control" id="yourEmail" required>
+                                    <input type="text" name="email" class="form-control" id="yourEmail">
                                     <div class="invalid-feedback">Please enter your email.</div>
                                 </div>
                             </div>
