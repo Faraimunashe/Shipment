@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <!-- Cart Start -->
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
@@ -88,4 +88,4 @@
         </div>
     </div>
     <!-- Cart End -->
-</x-guest-layout>
+</x-app-layout>

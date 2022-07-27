@@ -71,9 +71,9 @@
                                     <div class="input-group has-validation">
                                         <select name="role" class="form-control" id="yourRole" required>
                                             <option selected disabled>Select Role</option>
-                                            <option value="user">Customer</option>
+                                            <option value="user">Consignee</option>
                                             <option value="courier">Courier</option>
-                                            <option value="consigner">Consigner</option>
+                                            <option value="consigner">Consignor</option>
                                         </select>
                                     </div>
                                 </div>

@@ -96,6 +96,11 @@
                                 <div class="col-sm-10">
                                     <select name="country" class="form-control" id="inputText" required>
                                         <option selected disabled>Select Country</option>
+                                        <option value="Botswana">Botswana</option>
+                                        <option value="South Africa">South Africa</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="Spain">Spain</option>
+                                        <option value="Zambia">Zambia</option>
                                         <option value="Zimbabwe">Zimbabwe</option>
                                     </select>
                                 </div>
