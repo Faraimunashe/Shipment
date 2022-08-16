@@ -1,4 +1,6 @@
 <x-guest-layout>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
     <div class="pagetitle">
         <h1>Order Checkout</h1>
         <nav>
@@ -9,6 +11,9 @@
           </ol>
         </nav>
     </div><!-- End Page Title -->
+    @php
+        $gtotal = 0;
+    @endphp
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -117,11 +122,33 @@
                                         @foreach ($consigners as $consigner)
                                             <div class="d-flex justify-content-between">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="consigner_id" id="consignerfee" value="{{ $consigner->id }}" onclick="myfunc()" required>
+                                                    <input class="form-check-input" type="radio" name="consigner_id" id="consignerfee{{ $consigner->id }}" value="{{ $consigner->id }}" required>
                                                     <label class="form-check-label" for="consignerfee">
-                                                        {{ $consigner->name }} ${{ $consigner->pricing }}
+                                                        <div> {{ $consigner->name }} $
+                                                            <div id="theAmount{{ $consigner->id }}">{{ $consigner->pricing }}</div>
+                                                        </div>
                                                     </label>
                                                 </div>
+                                                <script>
+                                                    var the_amount{{ $consigner->id }} = document.getElementById("theAmount{{ $consigner->id }}");
+
+                                                    $('#consignerfee{{ $consigner->id }}').change(function(){
+
+                                                        if($(this).is(':checked')){
+                                                            // Checkbox is checked.
+                                                            var subtotal = document.getElementById('subbb');
+                                                            var gt = parseFloat(the_amount{{ $consigner->id }}.textContent) + parseFloat(subtotal.textContent);
+
+
+                                                            $("#sfee").html(the_amount{{ $consigner->id }}.innerText);
+                                                            $("#ssfee").html(the_amount{{ $consigner->id }}.innerText);
+                                                            $("#gto").html(gt);
+                                                        }else{
+                                                            // Checkbox is not checked.
+                                                        }
+
+                                                    });
+                                                </script>
                                             </div>
                                             <hr class="mt-0">
                                         @endforeach
@@ -139,9 +166,7 @@
                                     <h5>Products</h5>
                                 </div>
                                 <div class="card-body">
-                                    @php
-                                        $gtotal = 0;
-                                    @endphp
+
                                     @foreach ($cart as $item)
                                         @php
                                             $product = \App\Models\Product::join('product_images', 'product_images.product_id', '=', 'products.id')
@@ -164,25 +189,28 @@
                                     <hr class="mt-0">
                                     <div class="d-flex justify-content-between mb-3 pt-1">
                                         <h6 class="font-weight-medium">Subtotal</h6>
-                                        <h6 class="font-weight-medium">${{ $gtotal }}</h6>
+                                        <h6 class="font-weight-medium" id="subbb">{{ $gtotal }}</h6>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <h6 class="font-weight-medium">Shipping</h6>
-                                        <h6 class="font-weight-medium" id="sfee"></h6>
+                                        <h6 class="font-weight-medium" id="ssfee"></h6>
                                     </div>
                                 </div>
                                 <div class="card-footer border-secondary bg-transparent">
                                     <div class="d-flex justify-content-between mt-2">
-                                        <h5 class="font-weight-bold">Total</h5> @php $sfee_amount = 0; @endphp
-                                        <h5 class="font-weight-bold">${{ $sfee_amount + $gtotal }}</h5>
+                                        <h5 class="font-weight-bold">Total</h5>
+                                        <script>
+
+                                        </script>
+                                        <h5 class="font-weight-bold" id="gto">{{ $gtotal }}</h5>
                                     </div>
                                 </div>
                             </div>
                             <div class="card border-primary">
                                 <div class="card-body">
                                     <input type="hidden" name="gtotal" value="{{ $gtotal }}" required>
-                                    <input type="hidden" name="sfee" value="{{ $sfee_amount }}" required>
-                                    <input type="hidden" name="total" value="{{ $sfee_amount + $gtotal }}" required>
+                                    <input type="hidden" name="sfee" value="0" required>
+                                    <input type="hidden" name="total" value="{{ $gtotal }}" required>
                                 </div>
                                 <div class="d-grid gap-2">
                                     <button class="btn btn-primary" type="submit">
@@ -199,16 +227,5 @@
           </div>
         </div>
     </section>
-    <script>
-        function myfunc() {
-            var selectedOption = $("input:radio[name=consigner_id]:checked").val();
-            console.log(selectedOption);
 
-        }
-
-
-        // if (document.getElementById('r1').checked) {
-        // rate_value = document.getElementById('r1').value;
-        // }
-    </script>
 </x-guest-layout>

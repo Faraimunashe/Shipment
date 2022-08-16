@@ -53,30 +53,4 @@ class ShippingController extends Controller
         return redirect()->route('user-shopping')->with('success', 'Thank you for buying here, please buy again');
     }
 
-    // public function consigner()
-    // {
-    //     $consigners = Consigner::all();
-
-    //     return view('user.select-consigner', [
-    //         'consigners'=>$consigners
-    //     ]);
-    // }
-
-    // public function select_consigner(Request $request)
-    // {
-    //     $request->validate([
-    //         'consigner_id'=>'required|numeric',
-    //         'price'=>'required'
-    //     ]);
-
-    //     $order_id = Session::get('shipping_order_id');
-
-    //     $sc = new ShippingConsigner();
-    //     $sc->order_id = $order_id;
-    //     $sc->consigner_id = $request->consigner_id;
-    //     $sc->price = $request->price;
-    //     $sc->save();
-
-    //     return view('user.payment');
-    // }
 }
