@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Consigner;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class OrderController extends Controller
 {
@@ -100,5 +101,18 @@ class OrderController extends Controller
         return view('user.orders', [
             'orders'=>$orders
         ]);
+    }
+
+    public function report($order_id)
+    {
+        $order = Order::find($order_id);
+
+        $items = OrderItem::where('order_id', $order_id)->get();
+
+        $pdf = PDF::loadView('pdf.order', [
+            'order' => $order,
+            'items' => $items
+        ]);
+        return $pdf->download(now().'report.pdf');
     }
 }

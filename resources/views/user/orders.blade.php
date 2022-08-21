@@ -78,7 +78,7 @@
                                         <td>{{$item->created_at}}</td>
                                         <td>
                                             <a class="btn btn-success" href="{{ route('user-track',$item->id) }}"><i class="bi bi-map"></i></a>
-                                            <a class="btn btn-primary" href=""><i class="bi bi-download"></i></a>
+                                            <a class="btn btn-primary" href="{{ route('user-report', $item->id) }}"><i class="bi bi-download"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

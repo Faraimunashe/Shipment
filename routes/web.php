@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth', 'role:user']], function () {
 
     /*checkout routes*/
     Route::get('/user/checkout', 'App\Http\Controllers\user\OrderController@index')->name('user-checkout');
+    Route::get('/user/report/{id}', 'App\Http\Controllers\user\OrderController@report')->name('user-report');
     Route::post('/user/checkout/post', 'App\Http\Controllers\user\OrderController@checkout')->name('user-checkout-post');
 
     /*Shipping Address */
